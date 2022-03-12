@@ -24,7 +24,7 @@ defmodule EbanxWeb.MixProject do
   def application do
     [
       mod: {EbanxWeb.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools, :ssl]
     ]
   end
 

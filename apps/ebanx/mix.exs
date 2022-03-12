@@ -23,7 +23,7 @@ defmodule Ebanx.MixProject do
   def application do
     [
       mod: {Ebanx.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools, :ssl]
     ]
   end
 
