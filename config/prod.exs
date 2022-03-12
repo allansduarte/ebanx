@@ -10,7 +10,7 @@ import Config
 # which you should run after static files are built and
 # before starting your production server.
 config :ebanx_web, EbanxWeb.Endpoint,
-  url: [host: "https://whispering-oasis-99694.herokuapp.com/", port: 443],
+  url: [host: "https://whispering-oasis-99694.herokuapp.com/", port: {:system, "PORT"}],
   cache_static_manifest: "priv/static/cache_manifest.json",
   force_ssl: [rewrite_on: [:x_forwarded_proto]]
 
