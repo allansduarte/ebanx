@@ -7,7 +7,15 @@ defmodule Ebanx.Umbrella.MixProject do
       version: "0.1.0",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
-      aliases: aliases()
+      aliases: aliases(),
+      releases: [
+        ebanx_umbrella: [
+          applications: [
+            ebanx: :permanent,
+            ebanx_web: :permanent
+          ]
+        ]
+      ]
     ]
   end
 
