@@ -24,6 +24,8 @@ defmodule EbanxWeb.ErrorView do
     %{type: type, reason: reason}
   end
 
+  def render("error.json", %{type: "ern:error:not_found"}), do: 0
+
   def render("error.json", %{type: type}) do
     %{type: type}
   end

@@ -25,6 +25,8 @@ defmodule EbanxWeb.Router do
     pipe_through :api
 
     post "/test", PageController, :test
+
+    get "/balance", AccountsController, :balance
   end
 
   # Enables LiveDashboard only for development
