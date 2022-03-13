@@ -1,4 +1,4 @@
-defmodule Ebax.Accounts.Accounts do
+defmodule Ebanx.Accounts.Account do
   @moduledoc """
   Represents the accounts schema.
 
@@ -13,7 +13,6 @@ defmodule Ebax.Accounts.Accounts do
   """
   @type t :: %__MODULE__{}
 
-  @primary_key {:id, Ecto.UUID, autogenerate: true}
   @required [:balance]
 
   schema "accounts" do
@@ -25,12 +24,12 @@ defmodule Ebax.Accounts.Accounts do
   @spec changeset(map()) :: Changeset.t()
   def changeset(params), do: create_changeset(%__MODULE__{}, params)
 
-  @spec changeset(TickSpread.Account.t() | map(), map()) :: Changeset.t()
+  @spec changeset(Ebanx.Account.t() | map(), map()) :: Changeset.t()
   def changeset(account, params), do: create_changeset(account, params)
 
   defp create_changeset(module_or_account, params) do
     module_or_account
-    |> cast(params, @required ++ @optional)
+    |> cast(params, @required)
     |> validate_required(@required)
     |> validate_number(:balance, greater_than_or_equal_to: 0)
   end
