@@ -8,8 +8,8 @@ defmodule EbanxWeb.AccountsView do
   def render("deposit.json", %{account: account}) do
     %{
       destination: %{
-        id: account.number,
-        balance: account.balance
+        balance: account.balance,
+        id: account.number
       }
     }
   end
@@ -17,8 +17,8 @@ defmodule EbanxWeb.AccountsView do
   def render("withdraw.json", %{account: account}) do
     %{
       origin: %{
-        id: account.number,
-        balance: account.balance
+        balance: account.balance,
+        id: account.number
       }
     }
   end
@@ -26,12 +26,12 @@ defmodule EbanxWeb.AccountsView do
   def render("transfer.json", %{origin: origin, destination: destination}) do
     %{
       origin: %{
-        id: origin.number,
-        balance: origin.balance
+        balance: origin.balance,
+        id: origin.number
       },
       destination: %{
-        id: destination.number,
-        balance: destination.balance
+        balance: destination.balance,
+        id: destination.number
       }
     }
   end
