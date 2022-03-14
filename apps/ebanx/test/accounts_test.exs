@@ -21,4 +21,13 @@ defmodule Ebanx.AccountsTest do
       refute Accounts.balance_by_id(number)
     end
   end
+
+  describe "reset/1" do
+    test "delete all account data" do
+      account_fixture()
+      account_fixture()
+
+      assert {2, nil} == Accounts.reset()
+    end
+  end
 end

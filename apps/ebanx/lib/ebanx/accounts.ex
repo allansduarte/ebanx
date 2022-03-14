@@ -18,6 +18,8 @@ defmodule Ebanx.Accounts do
 
   def balance_by_id(number), do: Repo.get_by(Account, number: number)
 
+  def reset, do: Repo.delete_all(Account)
+
   @doc """
   Registers an account.
 

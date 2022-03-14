@@ -9,6 +9,15 @@ defmodule EbanxWeb.AccountsController do
 
   action_fallback EbanxWeb.FallbackController
 
+
+  @doc "Resets state"
+  @spec reset(conn :: Conn.t(), params :: map()) :: Conn.t()
+  def reset(conn, _params) do
+    with {_number_of_exclusions, nil} <- Accounts.reset() do
+      send_resp(conn, 200, "OK")
+    end
+  end
+
   @doc "Get the balance"
   @spec balance(Conn.t(), params :: map()) :: Conn.t()
   def balance(conn, params) do

@@ -3,6 +3,18 @@ defmodule EbanxWeb.AccountsControllerTest do
 
   import Ebanx.AccountsFixtures
 
+  describe "POST /reset" do
+    test "Reset state before starting tests", ctx do
+      account_fixture()
+      account_fixture()
+
+      response = post(ctx.conn, "/reset")
+
+      assert 200 == response.status
+      assert "OK" == response.resp_body
+    end
+  end
+
   describe "GET /balance" do
     test "Get balance for existing account", ctx do
       account = account_fixture(%{balance: 20})

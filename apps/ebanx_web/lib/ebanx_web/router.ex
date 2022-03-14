@@ -26,6 +26,7 @@ defmodule EbanxWeb.Router do
 
     post "/test", PageController, :test
 
+    post "/reset", AccountsController, :reset
     get "/balance", AccountsController, :balance
     post "/event", AccountsController, :event
   end
