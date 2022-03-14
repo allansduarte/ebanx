@@ -14,7 +14,7 @@ defmodule Ebanx.Accounts.Commands.Withdraw do
   alias Ebanx.Accounts.Inputs.Withdraw
   alias Ebanx.Repo
 
-  @type possible_errors :: nil | Ecto.Changeset.t()
+  @type possible_errors :: :not_found | Ecto.Changeset.t()
 
   @spec execute(input :: Withdraw.t()) :: {:ok, Account.t()} | {:error, possible_errors()}
   def execute(input) do

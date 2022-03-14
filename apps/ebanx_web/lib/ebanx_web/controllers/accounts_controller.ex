@@ -42,4 +42,13 @@ defmodule EbanxWeb.AccountsController do
       |> render("withdraw.json", account: account)
     end
   end
+
+  def event(conn, %{"type" => "transfer"} = params) do
+    with {:ok, input} <- ChangesetValidation.cast_and_apply(Transfer, params),
+         {:ok, account} <- Accounts.transfer(input) do
+      conn
+      |> put_status(:created)
+      |> render("transfer.json", account: account)
+    end
+  end
 end

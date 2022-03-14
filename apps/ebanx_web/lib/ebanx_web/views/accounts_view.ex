@@ -22,4 +22,17 @@ defmodule EbanxWeb.AccountsView do
       }
     }
   end
+
+  def render("transfer.json", %{origin: origin, destination: destination}) do
+    %{
+      origin: %{
+        id: origin.number,
+        balance: origin.balance
+      },
+      destination: %{
+        id: destination.number,
+        balance: destination.balance
+      }
+    }
+  end
 end

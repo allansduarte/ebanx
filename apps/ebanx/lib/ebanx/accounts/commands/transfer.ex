@@ -1,8 +1,8 @@
-defmodule Ebanx.Accounts.Commands.Deposit do
+defmodule Ebanx.Accounts.Commands.Transfer do
   @moduledoc """
-  Handles a deposit.
+  Handles a Transfer.
 
-  When creating a deposit, it's updated the balance.
+  When handles a Transfer, it's updated the balance.
   """
 
   import Ecto.Query, only: [lock: 2]
@@ -11,23 +11,23 @@ defmodule Ebanx.Accounts.Commands.Deposit do
 
   alias Ebanx.Accounts
   alias Ebanx.Accounts.Account
-  alias Ebanx.Accounts.Inputs.Deposit
+  alias Ebanx.Accounts.Inputs.Transfer
   alias Ebanx.Repo
 
-  @type possible_errors :: Ecto.Changeset.t()
+  @type possible_errors :: nil | Ecto.Changeset.t()
 
-  @spec execute(input :: Deposit.t()) :: {:ok, Account.t()} | {:error, possible_errors()}
+  @spec execute(input :: Transfer.t()) :: {:ok, Account.t()} | {:error, possible_errors()}
   def execute(input) do
-    Logger.metadata(destination: input.destination, amount: input.amount)
+    Logger.metadata(origin: input.origin, amount: input.amount)
 
     Repo.transaction(fn ->
       with %Account{} = account <- find_account(input),
-           {:ok, account} <- do_deposit(input.amount, account) do
+           {:ok, account} <- do_Transfer(input.amount, account) do
         account
       else
         {:error, err} ->
           Logger.error("""
-          Error processing Deposit
+          Error processing Transfer
           error: #{inspect(err)}
           """)
 
@@ -35,7 +35,7 @@ defmodule Ebanx.Accounts.Commands.Deposit do
 
         err ->
           Logger.error("""
-          Unexpected error processing Deposit
+          Unexpected error processing Transfer
           error: #{inspect(err)}
           """)
 
@@ -48,8 +48,8 @@ defmodule Ebanx.Accounts.Commands.Deposit do
     end
   end
 
-  defp do_deposit(amount, account) do
-    balance = Decimal.add(account.balance, amount)
+  defp do_withdraw(amount, account) do
+    balance = Decimal.sub(account.balance, amount)
 
     account
     |> Account.changeset(%{balance: balance})
@@ -59,11 +59,11 @@ defmodule Ebanx.Accounts.Commands.Deposit do
   defp find_account(input) do
     queryable = Account |> lock("FOR UPDATE")
 
-    case Repo.get_by(queryable, number: input.destination) do
+    case Repo.get_by(queryable, number: input.origin) do
       nil ->
-        {:ok, account} = Accounts.register_account(%{number: input.destination, balance: 0})
+        {:error, :not_found}
+      account ->
         account
-      account -> account
     end
   end
 end
