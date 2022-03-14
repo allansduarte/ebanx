@@ -17,8 +17,8 @@ defmodule EbanxWeb.AccountsView do
   def render("withdraw.json", %{account: account}) do
     %{
       origin: %{
-        balance: account.balance,
-        id: account.number
+        id: account.number,
+        balance: account.balance
       }
     }
   end
