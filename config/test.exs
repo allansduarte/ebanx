@@ -21,7 +21,7 @@ config :ebanx_web, EbanxWeb.Endpoint,
   server: false
 
 # Print only warnings and errors during test
-config :logger, level: :warn
+config :logger, backends: [], level: :warn
 
 # In test we don't send emails.
 config :ebanx, Ebanx.Mailer, adapter: Swoosh.Adapters.Test

@@ -27,6 +27,7 @@ defmodule EbanxWeb.Router do
     post "/test", PageController, :test
 
     get "/balance", AccountsController, :balance
+    post "/event", AccountsController, :event
   end
 
   # Enables LiveDashboard only for development
