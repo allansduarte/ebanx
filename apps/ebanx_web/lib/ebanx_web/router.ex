@@ -21,7 +21,7 @@ defmodule EbanxWeb.Router do
   end
 
   # Other scopes may use custom stacks.
-  scope "/api", EbanxWeb do
+  scope "/", EbanxWeb do
     pipe_through :api
 
     post "/test", PageController, :test

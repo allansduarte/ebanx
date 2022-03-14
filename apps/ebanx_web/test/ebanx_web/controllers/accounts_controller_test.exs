@@ -3,29 +3,29 @@ defmodule EbanxWeb.AccountsControllerTest do
 
   import Ebanx.AccountsFixtures
 
-  describe "GET /api/balance" do
+  describe "GET /balance" do
     test "Get balance for existing account", ctx do
       account = account_fixture(%{balance: 20})
 
       assert 20 ==
                ctx.conn
-               |> get("/api/balance", %{account_id: account.number})
+               |> get("/balance", %{account_id: account.number})
                |> json_response(200)
     end
 
     test "Get balance for non-existing account", ctx do
       assert 0 ==
                ctx.conn
-               |> get("/api/balance", %{account_id: 1234})
+               |> get("/balance", %{account_id: 1234})
                |> json_response(404)
     end
   end
 
-  describe "POST /api/event" do
+  describe "POST /event" do
     test "Create account with initial balance", ctx do
       assert %{"destination" => %{"balance" => "10", "id" => 100}} =
                ctx.conn
-               |> post("/api/event", %{type: "deposit", destination: 100, amount: 10})
+               |> post("/event", %{type: "deposit", destination: 100, amount: 10})
                |> json_response(201)
     end
 
@@ -35,7 +35,7 @@ defmodule EbanxWeb.AccountsControllerTest do
 
       assert %{"destination" => %{"balance" => "20", "id" => ^account_number}} =
                ctx.conn
-               |> post("/api/event", %{type: "deposit", destination: account.number, amount: 10})
+               |> post("/event", %{type: "deposit", destination: account.number, amount: 10})
                |> json_response(201)
     end
   end
