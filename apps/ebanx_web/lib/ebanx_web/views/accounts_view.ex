@@ -7,10 +7,11 @@ defmodule EbanxWeb.AccountsView do
 
   def render("deposit.json", %{account: account}) do
     %{
-      destination: %{
-        balance: account.balance,
-        id: account.number
-      }
+      destination:
+        Jason.OrderedObject.new(
+          id: account.number,
+          balance: account.balance
+        )
     }
   end
 
