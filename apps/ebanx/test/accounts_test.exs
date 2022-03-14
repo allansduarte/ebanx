@@ -9,16 +9,16 @@ defmodule Ebanx.AccountsTest do
   describe "balance_by_id/1" do
     test "with valid account id" do
       account = account_fixture(%{balance: 100})
-      id = account.id
+      number = account.number
 
-      assert %Account{id: ^id, balance: balance} = Accounts.balance_by_id(account.id)
+      assert %Account{number: ^number, balance: balance} = Accounts.balance_by_id(account.number)
       assert Decimal.equal?(balance, 100)
     end
 
     test "with invalid account id" do
-      id = 1234
+      number = 1234
 
-      refute Accounts.balance_by_id(id)
+      refute Accounts.balance_by_id(number)
     end
   end
 end

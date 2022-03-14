@@ -10,6 +10,7 @@ defmodule Ebanx.AccountsFixtures do
 
   def valid_account_attributes(attrs \\ %{}) do
     Enum.into(attrs, %{
+      number: :rand.uniform(9999),
       balance: valid_balance()
     })
   end

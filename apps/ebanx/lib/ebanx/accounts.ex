@@ -10,7 +10,7 @@ defmodule Ebanx.Accounts do
   @doc "See `Ebanx.Accounts.Commands.Deposit.execute/2`"
   defdelegate deposit(input), to: Deposit, as: :execute
 
-  def balance_by_id(id), do: Repo.get(Account, id)
+  def balance_by_id(number), do: Repo.get_by(Account, number: number)
 
   @doc """
   Registers an account.

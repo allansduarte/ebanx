@@ -13,9 +13,10 @@ defmodule Ebanx.Accounts.Account do
   """
   @type t :: %__MODULE__{}
 
-  @required [:balance]
+  @required [:number, :balance]
 
   schema "accounts" do
+    field :number, :integer
     field :balance, :decimal
 
     timestamps()

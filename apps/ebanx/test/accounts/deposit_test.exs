@@ -20,6 +20,7 @@ defmodule Ebanx.Accounts.Commands.DepositTest do
 
       assert {:ok, account} = Deposit.execute(input)
       assert Decimal.equal?(account.balance, 10)
+      assert account.number == 1234
     end
   end
 end

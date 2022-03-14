@@ -59,9 +59,9 @@ defmodule Ebanx.Accounts.Commands.Deposit do
   defp find_account(input) do
     queryable = Account |> lock("FOR UPDATE")
 
-    case Repo.get(queryable, input.destination) do
+    case Repo.get_by(queryable, number: input.destination) do
       nil ->
-        {:ok, account} = Accounts.register_account(%{balance: 0})
+        {:ok, account} = Accounts.register_account(%{number: input.destination, balance: 0})
         account
       account -> account
     end

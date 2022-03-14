@@ -8,7 +8,7 @@ defmodule EbanxWeb.AccountsView do
   def render("deposit.json", %{account: account}) do
     %{
       destination: %{
-        id: account.id,
+        id: account.number,
         balance: account.balance
       }
     }
