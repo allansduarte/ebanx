@@ -10,7 +10,7 @@ defmodule Ebanx.Accounts do
   @doc "See `Ebanx.Accounts.Commands.Deposit.execute/1`"
   defdelegate deposit(input), to: Deposit, as: :execute
 
-  @doc "See `Ebanx.Accounts.Commands.Deposit.execute/1`"
+  @doc "See `Ebanx.Accounts.Commands.Withdraw.execute/1`"
   defdelegate withdraw(input), to: Withdraw, as: :execute
 
   @doc "See `Ebanx.Accounts.Commands.Transfer.execute/1`"
