@@ -7,36 +7,27 @@ defmodule EbanxWeb.AccountsView do
 
   def render("deposit.json", %{account: account}) do
     %{
-      destination:
-        Jason.OrderedObject.new(
-          id: account.number,
-          balance: account.balance
-        )
+      destination: render_one(account, __MODULE__, "balance.json")
     }
   end
 
   def render("withdraw.json", %{account: account}) do
     %{
-      origin:
-        Jason.OrderedObject.new(
-          id: account.number,
-          balance: account.balance
-        )
+      origin: render_one(account, __MODULE__, "balance.json")
     }
   end
 
   def render("transfer.json", %{origin: origin, destination: destination}) do
     %{
-      origin:
-        Jason.OrderedObject.new(
-          id: origin.number,
-          balance: origin.balance
-        ),
-      destination:
-        Jason.OrderedObject.new(
-          id: destination.number,
-          balance: destination.balance
-        )
+      destination: render_one(destination, __MODULE__, "balance.json"),
+      origin: render_one(origin, __MODULE__, "balance.json")
     }
+  end
+
+  def render("balance.json", %{accounts: account}) do
+    Jason.OrderedObject.new(
+      id: Integer.to_string(account.number),
+      balance: Decimal.to_integer(account.balance)
+    )
   end
 end

@@ -35,7 +35,7 @@ defmodule EbanxWeb.AccountsControllerTest do
 
   describe "POST /event" do
     test "Create account with initial balance", ctx do
-      assert %{"destination" => %{"balance" => "10", "id" => 100}} =
+      assert %{"destination" => %{"balance" => 10, "id" => "100"}} =
                ctx.conn
                |> post("/event", %{type: "deposit", destination: 100, amount: 10})
                |> json_response(201)
@@ -43,9 +43,9 @@ defmodule EbanxWeb.AccountsControllerTest do
 
     test "Deposit into existing account", ctx do
       account = account_fixture(%{balance: 10})
-      account_number = account.number
+      account_number = Integer.to_string(account.number)
 
-      assert %{"destination" => %{"balance" => "20", "id" => ^account_number}} =
+      assert %{"destination" => %{"balance" => 20, "id" => ^account_number}} =
                ctx.conn
                |> post("/event", %{type: "deposit", destination: account.number, amount: 10})
                |> json_response(201)
@@ -60,9 +60,9 @@ defmodule EbanxWeb.AccountsControllerTest do
 
     test "Withdraw from existing account", ctx do
       account = account_fixture(%{balance: 10})
-      account_number = account.number
+      account_number = Integer.to_string(account.number)
 
-      assert %{"origin" => %{"balance" => "0", "id" => ^account_number}} =
+      assert %{"origin" => %{"balance" => 0, "id" => ^account_number}} =
                ctx.conn
                |> post("/event", %{type: "withdraw", origin: account.number, amount: 10})
                |> json_response(201)
@@ -72,12 +72,12 @@ defmodule EbanxWeb.AccountsControllerTest do
       origin = account_fixture(%{balance: 10})
       destination = account_fixture(%{balance: 20})
 
-      origin_number = origin.number
-      destination_number = destination.number
+      origin_number = Integer.to_string(origin.number)
+      destination_number = Integer.to_string(destination.number)
 
       assert %{
-               "destination" => %{"balance" => "30", "id" => ^destination_number},
-               "origin" => %{"balance" => "0", "id" => ^origin_number}
+               "destination" => %{"balance" => 30, "id" => ^destination_number},
+               "origin" => %{"balance" => 0, "id" => ^origin_number}
              } =
                ctx.conn
                |> post("/event", %{
@@ -91,11 +91,11 @@ defmodule EbanxWeb.AccountsControllerTest do
 
     test "Transfer from non-existing origin account", ctx do
       origin = account_fixture(%{balance: 20})
-      origin_number = origin.number
+      origin_number = Integer.to_string(origin.number)
 
       assert %{
-               "destination" => %{"balance" => "10", "id" => 1234},
-               "origin" => %{"balance" => "10", "id" => ^origin_number}
+               "destination" => %{"balance" => 10, "id" => "1234"},
+               "origin" => %{"balance" => 10, "id" => ^origin_number}
              } =
                ctx.conn
                |> post("/event", %{
