@@ -9,7 +9,7 @@ defmodule Ebanx.Accounts.Commands.DepositTest do
     test "with existent account" do
       account = account_fixture()
 
-      input = %{amount: 10, destination: account.id}
+      input = %{amount: 10, destination: account.number}
 
       assert {:ok, account} = Deposit.execute(input)
       assert Decimal.equal?(account.balance, 10)
