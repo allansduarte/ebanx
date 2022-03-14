@@ -75,19 +75,36 @@ defmodule EbanxWeb.AccountsControllerTest do
       origin_number = origin.number
       destination_number = destination.number
 
-      assert %{"destination" => %{"balance" => "30", "id" => ^destination_number}, "origin" => %{"balance" => "0", "id" => ^origin_number}} =
+      assert %{
+               "destination" => %{"balance" => "30", "id" => ^destination_number},
+               "origin" => %{"balance" => "0", "id" => ^origin_number}
+             } =
                ctx.conn
-               |> post("/event", %{type: "transfer", origin: origin.number, destination: destination.number, amount: 10})
+               |> post("/event", %{
+                 type: "transfer",
+                 origin: origin.number,
+                 destination: destination.number,
+                 amount: 10
+               })
                |> json_response(201)
     end
 
     test "Transfer from non-existing origin account", ctx do
       origin = account_fixture(%{balance: 20})
+      origin_number = origin.number
 
-      assert 0 =
+      assert %{
+               "destination" => %{"balance" => "10", "id" => 1234},
+               "origin" => %{"balance" => "10", "id" => ^origin_number}
+             } =
                ctx.conn
-               |> post("/event", %{type: "transfer", origin: origin.number, destination: 1234, amount: 10})
-               |> json_response(404)
+               |> post("/event", %{
+                 type: "transfer",
+                 origin: origin.number,
+                 destination: 1234,
+                 amount: 10
+               })
+               |> json_response(201)
     end
 
     test "Transfer from non-existing destination account", ctx do
@@ -95,7 +112,12 @@ defmodule EbanxWeb.AccountsControllerTest do
 
       assert 0 =
                ctx.conn
-               |> post("/event", %{type: "transfer", origin: 1234, destination: destination.number, amount: 10})
+               |> post("/event", %{
+                 type: "transfer",
+                 origin: 1234,
+                 destination: destination.number,
+                 amount: 10
+               })
                |> json_response(404)
     end
   end

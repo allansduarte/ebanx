@@ -18,10 +18,12 @@ defmodule Ebanx.Accounts.Commands.TransferTest do
     end
 
     test "with invalid destination" do
-      origin = account_fixture()
+      origin = account_fixture(%{balance: 10})
       input = %{amount: 10, destination: 1234, origin: origin.number}
 
-      assert {:error, :not_found} = Transfer.execute(input)
+      assert {:ok, origin, destination} = Transfer.execute(input)
+      assert Decimal.equal?(destination.balance, 10)
+      assert Decimal.equal?(origin.balance, 0)
     end
   end
 end

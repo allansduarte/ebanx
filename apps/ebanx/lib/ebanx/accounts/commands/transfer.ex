@@ -10,6 +10,7 @@ defmodule Ebanx.Accounts.Commands.Transfer do
   require Logger
 
   alias Ebanx.Accounts.Account
+  alias Ebanx.Accounts
   alias Ebanx.Accounts.Inputs.Transfer
   alias Ebanx.Repo
 
@@ -21,7 +22,7 @@ defmodule Ebanx.Accounts.Commands.Transfer do
 
     Repo.transaction(fn ->
       with  %Account{} = origin <- find_account(input.origin),
-            %Account{} = destination <- find_account(input.destination),
+            %Account{} = destination <- find_account_with_idempotency(input.destination),
            {:ok, origin} <- do_withdraw(input.amount, origin),
            {:ok, destination} <- do_debit(input.amount, destination) do
         {:ok, origin, destination}
@@ -76,6 +77,17 @@ defmodule Ebanx.Accounts.Commands.Transfer do
         {:error, :not_found}
       account ->
         account
+    end
+  end
+
+  defp find_account_with_idempotency(id) do
+    queryable = Account |> lock("FOR UPDATE")
+
+    case Repo.get_by(queryable, number: id) do
+      nil ->
+        {:ok, account} = Accounts.register_account(%{number: id, balance: 0})
+        account
+      account -> account
     end
   end
 end
