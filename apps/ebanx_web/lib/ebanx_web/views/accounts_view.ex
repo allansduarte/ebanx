@@ -17,23 +17,26 @@ defmodule EbanxWeb.AccountsView do
 
   def render("withdraw.json", %{account: account}) do
     %{
-      origin: %{
-        id: account.number,
-        balance: account.balance
-      }
+      origin:
+        Jason.OrderedObject.new(
+          id: account.number,
+          balance: account.balance
+        )
     }
   end
 
   def render("transfer.json", %{origin: origin, destination: destination}) do
     %{
-      origin: %{
-        balance: origin.balance,
-        id: origin.number
-      },
-      destination: %{
-        balance: destination.balance,
-        id: destination.number
-      }
+      origin:
+        Jason.OrderedObject.new(
+          id: origin.number,
+          balance: origin.balance
+        ),
+      destination:
+        Jason.OrderedObject.new(
+          id: destination.number,
+          balance: destination.balance
+        )
     }
   end
 end
