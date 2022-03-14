@@ -3,8 +3,8 @@ defmodule Ebanx.AccountsTest do
 
   import Ebanx.AccountsFixtures
 
-  alias Ebanx.Accounts.Account
   alias Ebanx.Accounts
+  alias Ebanx.Accounts.Account
 
   describe "balance_by_id/1" do
     test "with valid account id" do

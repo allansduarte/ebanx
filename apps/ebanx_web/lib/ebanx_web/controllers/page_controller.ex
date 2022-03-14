@@ -15,7 +15,6 @@ defmodule EbanxWeb.PageController do
   """
   def test(conn, params) do
     with {:ok, input} <- ChangesetValidation.cast_and_apply(Test, params) do
-      IO.inspect input
       send_resp(conn, 200, "")
     end
   end

@@ -16,6 +16,8 @@ defmodule Ebanx.DataCase do
 
   use ExUnit.CaseTemplate
 
+  alias Sandbox
+
   using do
     quote do
       alias Ebanx.Repo
@@ -28,8 +30,8 @@ defmodule Ebanx.DataCase do
   end
 
   setup tags do
-    pid = Ecto.Adapters.SQL.Sandbox.start_owner!(Ebanx.Repo, shared: not tags[:async])
-    on_exit(fn -> Ecto.Adapters.SQL.Sandbox.stop_owner(pid) end)
+    pid = Sandbox.start_owner!(Ebanx.Repo, shared: not tags[:async])
+    on_exit(fn -> Sandbox.stop_owner(pid) end)
     :ok
   end
 

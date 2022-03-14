@@ -23,8 +23,4 @@ defmodule Ebanx.AccountsFixtures do
 
     account
   end
-
-  defp build_user() do
-
-  end
 end

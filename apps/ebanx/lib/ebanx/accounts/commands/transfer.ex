@@ -9,8 +9,8 @@ defmodule Ebanx.Accounts.Commands.Transfer do
 
   require Logger
 
-  alias Ebanx.Accounts.Account
   alias Ebanx.Accounts
+  alias Ebanx.Accounts.Account
   alias Ebanx.Accounts.Inputs.Transfer
   alias Ebanx.Repo
 
