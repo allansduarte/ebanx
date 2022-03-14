@@ -15,7 +15,7 @@ defmodule Ebanx.Accounts.Commands.WithdrawTest do
       assert Decimal.equal?(account.balance, 0)
     end
 
-    test "with invalid destination" do
+    test "with invalid origin" do
       input = %{amount: 10, origin: 1234}
 
       assert {:error, :not_found} = Withdraw.execute(input)
