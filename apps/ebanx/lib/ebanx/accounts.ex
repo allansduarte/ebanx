@@ -4,7 +4,7 @@ defmodule Ebanx.Accounts do
   """
 
   alias Ebanx.Accounts.Account
-  alias Ebanx.Accounts.Commands.{Deposit, Withdraw}
+  alias Ebanx.Accounts.Commands.{Deposit, Transfer, Withdraw}
   alias Ebanx.Repo
 
   @doc "See `Ebanx.Accounts.Commands.Deposit.execute/1`"
@@ -12,6 +12,9 @@ defmodule Ebanx.Accounts do
 
   @doc "See `Ebanx.Accounts.Commands.Deposit.execute/1`"
   defdelegate withdraw(input), to: Withdraw, as: :execute
+
+  @doc "See `Ebanx.Accounts.Commands.Transfer.execute/1`"
+  defdelegate transfer(input), to: Transfer, as: :execute
 
   def balance_by_id(number), do: Repo.get_by(Account, number: number)
 
