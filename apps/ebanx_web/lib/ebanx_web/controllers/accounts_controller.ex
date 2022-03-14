@@ -5,7 +5,7 @@ defmodule EbanxWeb.AccountsController do
   alias Ebanx.Accounts.Account
   alias Ebanx.ChangesetValidation
   alias Ebanx.Inputs.Test
-  alias Ebanx.Accounts.Inputs.{Balance, Deposit}
+  alias Ebanx.Accounts.Inputs.{Balance, Deposit, Withdraw}
 
   action_fallback EbanxWeb.FallbackController
 
@@ -31,6 +31,15 @@ defmodule EbanxWeb.AccountsController do
       conn
       |> put_status(:created)
       |> render("deposit.json", account: account)
+    end
+  end
+
+  def event(conn, %{"type" => "withdraw"} = params) do
+    with {:ok, input} <- ChangesetValidation.cast_and_apply(Withdraw, params),
+         {:ok, account} <- Accounts.withdraw(input) do
+      conn
+      |> put_status(:created)
+      |> render("withdraw.json", account: account)
     end
   end
 end

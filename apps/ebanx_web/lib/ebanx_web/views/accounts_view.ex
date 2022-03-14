@@ -13,4 +13,13 @@ defmodule EbanxWeb.AccountsView do
       }
     }
   end
+
+  def render("withdraw.json", %{account: account}) do
+    %{
+      origin: %{
+        id: account.number,
+        balance: account.balance
+      }
+    }
+  end
 end

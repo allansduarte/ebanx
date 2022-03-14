@@ -38,5 +38,22 @@ defmodule EbanxWeb.AccountsControllerTest do
                |> post("/event", %{type: "deposit", destination: account.number, amount: 10})
                |> json_response(201)
     end
+
+    test "Withdraw from non-existing account", ctx do
+      assert 0 ==
+               ctx.conn
+               |> post("/event", %{type: "withdraw", origin: 200, amount: 10})
+               |> json_response(404)
+    end
+
+    test "Withdraw from existing account", ctx do
+      account = account_fixture(%{balance: 10})
+      account_number = account.number
+
+      assert %{"origin" => %{"balance" => "0", "id" => ^account_number}} =
+               ctx.conn
+               |> post("/event", %{type: "withdraw", origin: account.number, amount: 10})
+               |> json_response(201)
+    end
   end
 end
